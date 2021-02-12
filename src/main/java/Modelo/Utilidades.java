@@ -31,7 +31,7 @@ public class Utilidades {
                                     String [] atributosAlumno = linea.split(";");
 		Alumno alumn = new Alumno( atributosAlumno[1]  , 
                                                                    atributosAlumno[2],
-                                                                    atributosAlumno[3]);
+                                                                    atributosAlumno[3],Integer.parseInt(atributosAlumno[0]));
 
                                   alumnos.add(alumn);
                                                             

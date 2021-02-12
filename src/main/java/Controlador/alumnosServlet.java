@@ -10,7 +10,9 @@ import Modelo.Utilidades;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -36,6 +38,7 @@ public class alumnosServlet extends HttpServlet {
      */
     private ArrayList<String> grupos = null;
     private String rutaFicheros;
+    private ArrayList<Alumno> alumnos = null;
     
     public void init(ServletConfig config) throws ServletException {
     
@@ -43,6 +46,7 @@ public class alumnosServlet extends HttpServlet {
        grupos.add("2daw_a");
        grupos.add("2daw_b");
        rutaFicheros = config.getServletContext().getRealPath("").concat(File.separator).concat("grupos");
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -79,6 +83,28 @@ public class alumnosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         ArrayList mensajes = new ArrayList<Alumno>();
+         String grupoSeleccionado="2daw_a";
+            if (request.getParameter("grupo")!=null) {
+                grupoSeleccionado = request.getParameter("grupo");
+            }
+         ArrayList<Alumno> alumnos = Utilidades.getAlumnos(rutaFicheros.concat(File.separator).concat(grupoSeleccionado.replace(" ", "")).concat(".txt"));
+          int numeroAlumnos = alumnos.size();
+          int ultimoID = alumnos.get(numeroAlumnos-1).getId();
+          String[] ids= request.getParameterValues("alumnos");
+          String numerodeids = ids.length+"";
+              for(int x=0;x<ids.length;x++)
+               for ( Alumno alum:alumnos ) {
+                   String id =alum.getId()+"";
+                   if ( id.equalsIgnoreCase(ids[x])) {
+                       Alumno alumnoMandarMensaje = new Alumno(alum.getNombre(),alum.getApellidos(),alum.getCorreo(),alum.getId());
+                       mensajes.add(alumnoMandarMensaje);
+                   }
+               
+               }
+        request.setAttribute("mensajes", mensajes);
+        request.setAttribute("ids", numerodeids);
+        request.getRequestDispatcher("enviar.jsp").forward(request, response);
         
     }
 

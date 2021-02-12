@@ -44,18 +44,18 @@
          </form>
          
          <br>
-         <form action="mensajesServlet" method="get">
-             Alumnos:<br>
+         <form action="alumnosServlet" method="post">
+             Alumnos: <input type="text" value="<%=grupoActivo%>" name="grupoActivo" disabled="disabled"><br>
              
              <% 
-                 int i =0;
+
                  for ( Alumno alumn: alumnos ) { 
-                 alumn.setId(i);
                  
                  %>
-                 Nombre:&nbsp;<%=alumn.getNombre()%> Apellidos:&nbsp;<%=alumn.getApellidos()%> Correo:&nbsp;<%=alumn.getCorreo()%>&nbsp;&nbsp;<input type="checkbox"  value="<%=alumn.getId()%>"></input> <br>
-             <% i++;} %>
+                 Nombre:&nbsp;<%=alumn.getNombre()%> Apellidos:&nbsp;<%=alumn.getApellidos()%> Correo:&nbsp;<%=alumn.getCorreo()%>&nbsp;&nbsp;<input type="checkbox" name="alumnos"  value="<%=alumn.getId()%>"></input> <br>
+             <% ;} %>
          </select>
+         
          <input type="submit" value="Elegir alumnos para mandar mensaje"></input>
             </form>
         </div>

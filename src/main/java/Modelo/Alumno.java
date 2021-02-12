@@ -14,12 +14,26 @@ public class Alumno {
     private String apellidos;
     private String correo;
     private int id;
+    private boolean mensaje = false;
 
-    public Alumno(String nombre, String apellidos, String correo) {
+    public boolean isMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(boolean mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public Alumno(String nombre, String apellidos, String correo, int id) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
+        this.id = id;
     }
+
+    
+
+    
 
     public int getId() {
         return id;
